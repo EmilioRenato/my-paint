@@ -15,11 +15,15 @@ public:
     Principal(QWidget *parent = nullptr);
     ~Principal();
 
+    QPoint inicial() const;
+    void setInicial(QPoint newInicial);
+    QPoint final() const;
+    void setFinal(QPoint newFinal);
+
 protected:
     void paintEvent(QPaintEvent *event) override;
     void mousePressEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
-    void mouseReleaseEvent(QMouseEvent *event) override;
 
 
 private slots:
@@ -33,19 +37,29 @@ private slots:
 
     void on_actionGuardar_triggered();
 
-    void on_actionLibre_triggered();
 
     void on_actionRect_nculos_triggered();
+
+    void on_actionLineas_triggered();
+
+    void on_actionLibre_triggered();
+
+    void on_actionCircunferencias_triggered();
 
 private:
     Ui::Principal *ui;
     QImage *mImagen;        // Imagen sobre la que se va a dibujar
-    QPainter *mPainter;     // Painter de la imagen
+    QPainter *mPainter; // Variable para elegir las opciones de dibujo
+
     QPoint mInicial;        // Punto incial para dibujar la línea
     QPoint mFinal;          // Punto final para dibujar la línea
     bool mPuedeDibujar;     // Determina si debe o no dibujar
     int mAncho;             // Define el ancho del pincel
     QColor mColor;          // Define el color del pincel
-    int mNumLineas;         // Cuenta el número de líneas
+    int mNumLineas;  // Cuenta el número de líneas
+    char menu;
+    void linea(QMouseEvent *event);
+    void rectangulo(QMouseEvent *event);
+    void circulo (QMouseEvent *event);
 };
 #endif // PRINCIPAL_H

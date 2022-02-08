@@ -1,15 +1,21 @@
 #include "principal.h"
 #include "ui_principal.h"
-
 #include <QImage>
 #include <QPainter>
 #include <QMouseEvent>
 #include <QPaintEvent>
 #include <QDebug>
+#include <QRectF>
 #include <QInputDialog>
 #include <QColorDialog>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QTextStream>
+#include <QMessageBox>
+#include <QColorDialog>
+#include <QColor>
+#include <QInputDialog>
+
 
 #define DEFAULT_ANCHO 3
 
@@ -26,7 +32,7 @@ Principal::Principal(QWidget *parent)
     mPainter = new QPainter(mImagen);
     mPainter->setRenderHint(QPainter::Antialiasing);
     // Inicializar otras variables
-    mPuedeDibujar = false;
+    mPuedeDibujar = true;
     mColor = Qt::black;
     mAncho = DEFAULT_ANCHO;
     mNumLineas = 0;
@@ -51,42 +57,46 @@ void Principal::paintEvent(QPaintEvent *event)
 
 void Principal::mousePressEvent(QMouseEvent *event)
 {
-    mPuedeDibujar = true;
-    mInicial = event->pos();
-    event->accept();
+
+    switch (menu) {
+    case 'L':
+        mInicial = event->pos();
+            ui->statusbar->showMessage("Número de líneas: " + QString::number(++mNumLineas));
+        break;
+    case 'l':
+        linea(event);
+            ui->statusbar->showMessage("Número de líneas: " + QString::number(++mNumLineas));
+        break;
+    case 'r':
+        rectangulo(event);
+            ui->statusbar->showMessage("Número de líneas: " + QString::number(++mNumLineas*2));
+        break;
+    case 'c':
+        circulo(event);
+            ui->statusbar->showMessage("Número de líneas: " + QString::number(++mNumLineas/2));
+        break;
+    default:
+        break;
+    }
+
+    mPuedeDibujar = !mPuedeDibujar;
 }
 
 void Principal::mouseMoveEvent(QMouseEvent *event)
 {
-    // Validar si se puede dibujar
-    if ( !mPuedeDibujar ) {
-        event->accept();
-        return;
+    if(menu=='L')
+    {
+        mFinal = event->pos();
+        QPen pincel;
+        pincel.setWidth(mAncho);
+        pincel.setColor(mColor);
+        mPainter->setPen(pincel);
+        mPainter->drawLine(mInicial,mFinal);
     }
-    // Capturar el punto donde se suelta el mouse
-    mFinal = event->pos();
-    // Crear un pincel y establecer atributos
-    QPen pincel;
-    pincel.setColor(mColor);
-    pincel.setWidth(mAncho);
-    // Dibujar una linea
-    mPainter->setPen(pincel);
-    mPainter->drawLine(mInicial, mFinal);
-    // Mostrar el número de líneas en la barra de estado
-    ui->statusbar->showMessage("Número de líneas: " + QString::number(++mNumLineas));
-    // Actualizar la interfaz
     update();
-    // actualizar el punto inicial
     mInicial = mFinal;
 }
 
-void Principal::mouseReleaseEvent(QMouseEvent *event)
-{
-    mPuedeDibujar = false;
-    // Aceptar el vento
-    event->accept();
-
-}
 
 
 void Principal::on_actionAncho_triggered()
@@ -136,24 +146,110 @@ void Principal::on_actionGuardar_triggered()
 }
 
 
+QPoint Principal::inicial() const
+{
+    return mInicial;
+}
+
+void Principal::setInicial(QPoint newInicial)
+{
+    mInicial = newInicial;
+}
+
+QPoint Principal::final() const
+{
+    return mFinal;
+}
+
+void Principal::setFinal(QPoint newFinal)
+{
+    mFinal = newFinal;
+}
+
 
 
 void Principal::on_actionRect_nculos_triggered()
 {
-    QMouseEvent *event;
-    mFinal = event->pos();
 
-    QPen pincel;
-    pincel.setColor(mColor);
-    pincel.setWidth(mAncho);
-    // Dibujar una linea
-    mPainter->setPen(pincel);
-    mPainter->drawLine(mInicial,mFinal);
-    // Mostrar el número de líneas en la barra de estado
-    ui->statusbar->showMessage("Número de líneas: " + QString::number(++mNumLineas));
-    // Actualizar la interfaz
-    update();
-    // actualizar el punto inicial
-    mInicial = mFinal;
+    menu='r';
+}
+
+
+void Principal::on_actionLineas_triggered()
+{
+    menu='l';
+}
+
+
+void Principal::on_actionLibre_triggered()
+{
+    menu='L';
+}
+
+
+void Principal::on_actionCircunferencias_triggered()
+{
+    menu='c';
+}
+
+void Principal::linea(QMouseEvent *event)
+{
+    if(mPuedeDibujar){
+        mInicial = event->pos();
+    }else{
+        mFinal = event->pos();
+        QPen pincel;
+                pincel.setWidth(mAncho);
+                 pincel.setColor(mColor);
+
+
+                  mPainter->setPen(pincel);
+             mPainter->drawLine(mInicial, mFinal);
+
+        update();
+    }
+}
+
+void Principal::rectangulo(QMouseEvent *event)
+{
+    if(mPuedeDibujar){
+        mInicial = event->pos();
+    }else{
+        mFinal = event->pos();
+        QPen pincel;
+        pincel.setWidth(mAncho);
+                 pincel.setColor(mColor);
+
+
+                    mPainter->setPen(pincel);
+
+
+                  QRect rectangulo(mInicial,mFinal);
+                 mPainter->setPen(pincel);
+
+                      mPainter->drawRect(rectangulo);
+        update();
+    }
+}
+
+void Principal::circulo(QMouseEvent *event)
+{
+    if(mPuedeDibujar){
+        mInicial = event->pos();
+    }else{
+        mFinal = event->pos();
+        QPen pincel;
+            pincel.setWidth(mAncho);
+             pincel.setColor(mColor);
+        mPainter->setPen(pincel);
+
+
+        QRect rectangulo(mInicial,mFinal);
+             QPainter ellipsePainter(this);
+                 ellipsePainter.drawEllipse(rectangulo);
+                     mPainter->setPen(pincel);
+                    mPainter->drawEllipse(rectangulo);
+        update();
+    }
 }
 

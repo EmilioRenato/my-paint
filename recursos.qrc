@@ -1,0 +1,17 @@
+<RCC>
+    <qresource prefix="/">
+        <file>mipaint_al.qm</file>
+        <file>mipaint_ch.qm</file>
+        <file>mipaint_jp.qm</file>
+        <file>recursos/ancho-del-texto.png</file>
+        <file>recursos/bote-de-pintura.png</file>
+        <file>recursos/carpeta.png</file>
+        <file>recursos/circulo.png</file>
+        <file>recursos/guardar-el-archivo.png</file>
+        <file>recursos/linea.png</file>
+        <file>recursos/linea-diagonal.png</file>
+        <file>recursos/pintar.png</file>
+        <file>recursos/rectangulo-redondeado.png</file>
+        <file>recursos/salida.png</file>
+    </qresource>
+</RCC>

@@ -16,6 +16,13 @@
   <property name="windowTitle">
    <string>Principal</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="recursos.qrc">
+    <normaloff>:/recursos/pintar.png</normaloff>:/recursos/pintar.png</iconset>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">border-color: rgb(126, 255, 156);</string>
+  </property>
   <widget class="QWidget" name="centralwidget"/>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -23,7 +30,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuArchivo">
@@ -43,6 +50,9 @@
     <addaction name="actionAncho"/>
    </widget>
    <widget class="QMenu" name="menuForma">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="title">
      <string>Forma</string>
     </property>
@@ -57,6 +67,10 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionNuevo">
+   <property name="icon">
+    <iconset resource="recursos.qrc">
+     <normaloff>:/recursos/carpeta.png</normaloff>:/recursos/carpeta.png</iconset>
+   </property>
    <property name="text">
     <string>Nuevo</string>
    </property>
@@ -65,6 +79,10 @@
    </property>
   </action>
   <action name="actionGuardar">
+   <property name="icon">
+    <iconset resource="recursos.qrc">
+     <normaloff>:/recursos/guardar-el-archivo.png</normaloff>:/recursos/guardar-el-archivo.png</iconset>
+   </property>
    <property name="text">
     <string>Guardar</string>
    </property>
@@ -73,6 +91,10 @@
    </property>
   </action>
   <action name="actionSalir">
+   <property name="icon">
+    <iconset resource="recursos.qrc">
+     <normaloff>:/recursos/salida.png</normaloff>:/recursos/salida.png</iconset>
+   </property>
    <property name="text">
     <string>Salir</string>
    </property>
@@ -81,6 +103,10 @@
    </property>
   </action>
   <action name="actionColor">
+   <property name="icon">
+    <iconset resource="recursos.qrc">
+     <normaloff>:/recursos/bote-de-pintura.png</normaloff>:/recursos/bote-de-pintura.png</iconset>
+   </property>
    <property name="text">
     <string>Color</string>
    </property>
@@ -89,6 +115,10 @@
    </property>
   </action>
   <action name="actionAncho">
+   <property name="icon">
+    <iconset resource="recursos.qrc">
+     <normaloff>:/recursos/ancho-del-texto.png</normaloff>:/recursos/ancho-del-texto.png</iconset>
+   </property>
    <property name="text">
     <string>Ancho</string>
    </property>
@@ -97,6 +127,13 @@
    </property>
   </action>
   <action name="actionLineas">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="recursos.qrc">
+     <normaloff>:/recursos/linea-diagonal.png</normaloff>:/recursos/linea-diagonal.png</iconset>
+   </property>
    <property name="text">
     <string>Lineas</string>
    </property>
@@ -105,21 +142,47 @@
    <property name="checkable">
     <bool>true</bool>
    </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="recursos.qrc">
+     <normaloff>:/recursos/linea.png</normaloff>:/recursos/linea.png</iconset>
+   </property>
    <property name="text">
     <string>Libre</string>
    </property>
   </action>
   <action name="actionRect_nculos">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="recursos.qrc">
+     <normaloff>:/recursos/rectangulo-redondeado.png</normaloff>:/recursos/rectangulo-redondeado.png</iconset>
+   </property>
    <property name="text">
     <string>Rectánculos</string>
    </property>
   </action>
   <action name="actionCircunferencias">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="recursos.qrc">
+     <normaloff>:/recursos/circulo.png</normaloff>:/recursos/circulo.png</iconset>
+   </property>
    <property name="text">
     <string>Circunferencias</string>
    </property>
   </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="recursos.qrc"/>
+ </resources>
  <connections/>
 </ui>
